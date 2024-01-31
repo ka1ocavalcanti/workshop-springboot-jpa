@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kaioweb.workshop.entities.User;
 import com.kaioweb.workshop.repositories.UserRepository;
+import com.kaioweb.workshop.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -20,7 +21,7 @@ public class UserService {
 	}
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
